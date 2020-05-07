@@ -7,6 +7,15 @@ data:
     subnet 10.10.0.0 netmask 255.255.255.0 {
       range 10.10.0.100 10.10.0.199;
     }
+    class "PXE" {
+      match if substring(option vendor-class-identifier, 0, 9) ="PXEClient";
+      option vendor-class-identifier "PXEClient";
+      vendor-option-space PXE;
+      next-server localhost;
+      filename = "pxelinux.0";
+    }
+
+
 kind: ConfigMap
 metadata:
   name: dhcpd-conf
