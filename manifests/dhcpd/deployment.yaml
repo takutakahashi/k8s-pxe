@@ -41,10 +41,20 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: tank
+      - image: pghalliday/tftp
+        imagePullPolicy: Always
+        name: tftp
+        volumeMounts:
+        - mountPath: /var/tftpboot
+          name: tftpboot
       volumes:
       - name: tank
         hostPath:
           path: /tank/pv/dhcpd
+          type: ""
+      - name: tftpboot
+        hostPath:
+          path: /tank/pv/tftpboot
           type: ""
       - name: dhcpd-conf
         configMap:
