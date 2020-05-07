@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dhcpd
+  namespace: kube-pxe-system
+  labels:
+    app: dhcpd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dhcpd
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: dhcpd
+    spec:
+      hostNetwork: true
+      initContainers:
+      - name: cp-conf
+        image: busybox
+        command:
+          - cp
+          - -f
+          - /cm/dhcpd.conf
+          - /data/dhcpd.conf
+        volumeMounts:
+        - mountPath: /data
+          name: tank
+        - mountPath: /cm
+          name: dhcpd-conf
+      containers:
+      - image: networkboot/dhcpd
+        imagePullPolicy: Always
+        name: dhcpd
+        volumeMounts:
+        - mountPath: /data
+          name: tank
+      volumes:
+      - name: tank
+        hostPath:
+          path: /tank/pv/dhcpd
+          type: ""
+      - name: dhcpd-conf
+        configMap:
+          name: dhcpd-conf
