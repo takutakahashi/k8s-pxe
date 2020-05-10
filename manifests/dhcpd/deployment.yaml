@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dhcpd
+  name: dnsmasq
   namespace: kube-pxe-system
   labels:
-    app: dhcpd
+    app: dnsmasq
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dhcpd
+      app: dnsmasq
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -18,44 +18,33 @@ spec:
   template:
     metadata:
       labels:
-        app: dhcpd
+        app: dnsmasq
     spec:
       hostNetwork: true
-      initContainers:
-      - name: cp-conf
-        image: busybox
-        command:
-          - cp
-          - -f
-          - /cm/dhcpd.conf
-          - /data/dhcpd.conf
-        volumeMounts:
-        - mountPath: /data
-          name: tank
-        - mountPath: /cm
-          name: dhcpd-conf
       containers:
-      - image: networkboot/dhcpd
+      - image: andyshinn/dnsmasq
+        args:
+          - --log-facility=-
+        securityContext:
+          capabilities:
+            add: ["NET_ADMIN"]
         imagePullPolicy: Always
-        name: dhcpd
+        name: dnsmasq
         volumeMounts:
-        - mountPath: /data
-          name: tank
-      - image: pghalliday/tftp
-        imagePullPolicy: Always
-        name: tftp
-        volumeMounts:
-        - mountPath: /var/tftpboot
+        - mountPath: /tftpboot
           name: tftpboot
+        - mountPath: /etc/dnsmasq.conf
+          name: dnsmasq-conf
+          subPath: dnsmasq.conf
       volumes:
       - name: tank
         hostPath:
-          path: /tank/pv/dhcpd
+          path: /tank/pv/dnsmasq
           type: ""
       - name: tftpboot
         hostPath:
           path: /tank/pv/tftpboot
           type: ""
-      - name: dhcpd-conf
+      - name: dnsmasq-conf
         configMap:
-          name: dhcpd-conf
+          name: dnsmasq-conf

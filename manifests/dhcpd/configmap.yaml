@@ -1,15 +1,16 @@
 apiVersion: v1
 data:
-  dhcpd.conf: |
-    option domain-name-servers 8.8.8.8, 8.8.4.4;
-    option subnet-mask 255.255.255.0;
-    option routers 10.10.0.1;
-    subnet 10.10.0.0 netmask 255.255.255.0 {
-      range 10.10.0.100 10.10.0.199;
-      filename = "pxelinux.0";
-    }
+  dnsmasq.conf: |
+    port=0
+    dhcp-range=10.10.0.100,10.10.0.149,255.255.255.0,2h
+    dhcp-option = option:router, 10.10.0.1
+    dhcp-option = option:dns-server, 8.8.8.8
+    log-dhcp
+    enable-tftp
+    tftp-root=/tftpboot
+    pxe-service=0,"Raspberry Pi Boot"
 
 kind: ConfigMap
 metadata:
-  name: dhcpd-conf
+  name: dnsmasq-conf
   namespace: kube-pxe-system
