@@ -12,4 +12,7 @@ apt install -y docker.io
 /bin/register_dns.sh
 
 ### k3s up ###
-/bin/k3s_up.sh
+systemctl enable k3s
+systemctl start k3s
+
+/bin/register_secret.sh
