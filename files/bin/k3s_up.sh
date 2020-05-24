@@ -1,5 +1,5 @@
 #!/bin/bash -x
-
+apt install -y dnsutils netcat
 K3S_TOKEN=sadfagowphegvjkdfakjweooh
 wget "https://github.com/rancher/k3s/releases/download/v1.17.5%2Bk3s1/k3s-armhf"
 chmod +x k3s-armhf
