@@ -14,4 +14,4 @@ do
   done
 done
 
-k3s server --cluster-init
+k3s server --cluster-init --tls-san k8s.lab.takutakahashi.dev
