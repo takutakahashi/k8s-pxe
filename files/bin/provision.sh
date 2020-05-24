@@ -2,7 +2,8 @@
 
 ### set hostname ###
 SERIAL=`cat /proc/cpuinfo |grep -i serial |awk '{print $3}'`
-hostname $SERIAL.lab.takutakahashi.dev
+hostname ${SERIAL:8}.lab.takutakahashi.dev
+
 ### docker install ###
 apt update -y
 apt install -y docker.io
