@@ -3,8 +3,9 @@ data:
   dnsmasq.conf: |
     port=0
     dhcp-range=10.10.0.100,10.10.0.149,255.255.255.0,2h
+    dhcp-host=b8:27:eb:ef:e3:46,10.10.0.100
     dhcp-option = option:router, 10.10.0.1
-    dhcp-option = option:dns-server, 8.8.8.8
+    dhcp-option = option:dns-server, 8.8.8.8,8.8.4.4
     log-dhcp
     enable-tftp
     tftp-root=/tftpboot
