@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xe
 
 apt update -y
 apt install -y git
