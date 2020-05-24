@@ -1,0 +1,11 @@
+[Unit]
+Description=k3s
+After=network.target auditd.service
+
+[Service]
+ExecStart=/bin/k3s_up.sh
+Type=simple
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
