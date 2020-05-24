@@ -1,0 +1,10 @@
+[Unit]
+Description=provision
+After=network.target auditd.service
+
+[Service]
+ExecStart=/bin/provision.sh
+Type=Simple
+
+[Install]
+WantedBy=multi-user.target
