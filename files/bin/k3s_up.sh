@@ -9,7 +9,7 @@ dig +short SRV k3s-master.lab.takutakahashi.dev |grep -v "$SERIAL"|awk '{print $
 do
   for i in 1 2 3 4 5
   do
-    echo exit |nc -w 10 ${host} 6443 && ( K3S_TOKEN=`dig +short TXT ${host} | sed 's/"//g'` k3s server --server https://${host}:6443) || true
+    echo exit |nc -w 10 ${host} 6443 && ( K3S_TOKEN=`dig +short TXT ${host} | sed 's/"//g'` k3s server --server https://${host}:6443 --tls-san k8s.lab.takutakahashi.dev) || true
   done
 done
 
