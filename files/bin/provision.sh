@@ -13,6 +13,6 @@ apt install -y docker.io
 
 ### k3s up ###
 systemctl enable k3s
-systemctl start k3s
+systemctl restart k3s
 
 /bin/register_secret.sh
