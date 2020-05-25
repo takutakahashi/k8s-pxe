@@ -1,5 +1,6 @@
 #!/bin/bash -xe
 
+rm -rf /tmp/pxe
 apt update -y
 apt install -y git
 git clone https://github.com/takutakahashi/k8s-pxe.git /tmp/pxe
