@@ -1,6 +1,6 @@
 #!/bin/bash -x
 apt install -y dnsutils netcat
-ls /bin/k3s && ls /bar/lib/rancher && k3s server
+ls /bin/k3s && ls /var/lib/rancher/k3s && k3s server
 wget "https://github.com/rancher/k3s/releases/download/v1.17.5%2Bk3s1/k3s-armhf"
 chmod +x k3s-armhf
 mv k3s-armhf /bin/k3s
