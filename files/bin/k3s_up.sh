@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-K3S_OPTS="--node-taint k3s-controlplane=true:NoExecute --no-deploy traefik"
+K3S_OPTS="--datastore-endpoint=`cat /etc/db` --node-taint k3s-controlplane=true:NoExecute --no-deploy traefik"
 ls /bin/k3s && ls /var/lib/rancher/k3s && k3s server $K3S_OPTS
 apt install -y dnsutils netcat
 rm -f /bin/k3s
