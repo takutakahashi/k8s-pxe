@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 
 DEV=/dev/sda
-IMG=/opt/image.img
+IMG=/opt/raspbian-buster-lite.img
 ls $IMG || (wget http://cdimage.ubuntu.com/releases/20.04/release/ubuntu-20.04-preinstalled-server-arm64+raspi.img.xz -O image.img.xz; unxz image.img.xz; mv image.img /opt)
 df |grep "$DEV" |awk '{print $6}' |xargs -I{} umount {}
 sync
