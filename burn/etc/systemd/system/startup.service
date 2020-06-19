@@ -1,0 +1,11 @@
+[Unit]
+Description=startup
+After=network.target auditd.service
+
+[Service]
+ExecStart=/bin/startup.sh
+Type=simple
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
