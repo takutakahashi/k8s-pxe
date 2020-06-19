@@ -1,0 +1,15 @@
+#!/bin/bash -xe
+
+apt update
+apt install -y git
+
+mount /dev/sda2 /mnt
+
+git clone https://github.com/takutakahashi/k8s-pxe.git /tmp/pxe
+cd /tmp/pxe/bootstrap
+cp bin/startup.sh /mnt/bin/
+cp etc/systemd/system/multi-user.target.wants/startup.service /mnt/systemd/system/startup.service
+cd /mnt/systemd/system/multi-user.target.wants/
+ln -s ../startup.service
+cd /tmp/pxe
+umount /mnt

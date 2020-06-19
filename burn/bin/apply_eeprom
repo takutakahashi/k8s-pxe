@@ -1,0 +1,12 @@
+#!/bin/bash -ex
+
+apt update
+apt full-upgrade -y
+apt install rpi-eeprom -y
+cd /tmp
+EEPROM=`ls -d /lib/firmware/raspberrypi/bootloader/critical/* -1 |grep pieeprom |sort |tail -1`
+cp $EEPROM /tmp/pieeprom.bin
+rpi-eeprom-config /tmp/pieeprom.bin > /tmp/bootconf.txt
+sed -i s/0x1/0x21/g bootconf.txt
+rpi-eeprom-config --out pieeprom-new.bin --config bootconf.txt pieeprom.bin
+rpi-eeprom-update -d -f pieeprom-new.bin && echo "rebooted" > /opt/status

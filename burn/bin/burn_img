@@ -1,0 +1,22 @@
+#!/bin/bash -xe
+
+DEV=/dev/sda
+IMG=/opt/raspbian-buster-lite.img
+df |grep "$DEV" |awk '{print $6}' |xargs -I{} umount {}
+sync
+printf "d\n\nd\nw\n" | fdisk "$DEV"
+sync
+partprobe
+sleep 10
+dd if=$IMG of=$DEV conv=fsync status=progress
+sync
+partprobe
+sleep 10
+echo 1 > /sys/block/sda/device/rescan
+P1=`fdisk -l $DEV |grep ${DEV}1 |awk '{print $3}'`
+printf "d\n\nn\np\n2\n`expr $P1 + 1`\n\n\nw\n" | fdisk "$DEV"
+partprobe
+e2fsck -f -y /dev/sda2
+resize2fs /dev/sda2
+echo 1 > /sys/block/sda/device/rescan
+partprobe
