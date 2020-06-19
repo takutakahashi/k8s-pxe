@@ -10,6 +10,6 @@ cd /tmp/pxe/bootstrap
 cp bin/startup.sh /mnt/bin/
 cp etc/systemd/system/multi-user.target.wants/startup.service /mnt/etc/systemd/system/startup.service
 cd /mnt/etc/systemd/system/multi-user.target.wants/
-ln -s ../startup.service
+ls startup.service || ln -s ../startup.service
 cd /tmp/pxe
 umount /mnt
