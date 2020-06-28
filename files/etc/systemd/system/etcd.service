@@ -1,0 +1,10 @@
+[Unit]
+Description=tecd
+After=network.target auditd.service
+
+[Service]
+ExecStart=/bin/etcd_up.sh
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
