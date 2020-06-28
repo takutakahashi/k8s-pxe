@@ -18,6 +18,10 @@ apt install -y docker.io
 ### register DNS record ###
 /bin/register_dns.sh
 
+### etcd up ###
+systemctl daemon-reload
+systemctl enable etcd
+systemctl restart etcd
 ### k3s up ###
 systemctl daemon-reload
 systemctl enable k3s
