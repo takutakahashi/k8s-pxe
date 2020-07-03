@@ -18,7 +18,9 @@ apt install -y docker.io
 ### register DNS record ###
 /bin/register_dns.sh
 
+
 ### etcd up ###
+/bin/mkcert.sh
 systemctl daemon-reload
 systemctl enable etcd
 systemctl restart etcd
