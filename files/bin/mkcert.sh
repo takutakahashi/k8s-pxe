@@ -1,5 +1,7 @@
 #!/bin/bash
-wget -O /bin/mkcert https://github.com/FiloSottile/mkcert/releases/download/v1.4.1/mkcert-v1.4.1-linux-arm
-chmod +x /bin/mkcert
-mkcert -install
-srv2ip.sh _etcd-client-ssl._tcp.lab.takutakahashi.dev |xargs mkcert -cert-file /etc/etcd/certs/server.crt -key-file /etc/etcd/certs/cerver.key lab.takutakahashi.dev "*.lab.takutakahashi.dev" localhost 127.0.0.1
+HOSTNAME=`hostname`
+IP=`dig +short $HOSTNAME`
+ls /bin/cfssl || cfssl_build.sh
+cd /tmp/pxe/files/bin/cfssl
+cfssl gencert -initca ca-csr.json | cfssljson -bare ca -
+echo '{"CN":"k8s.lab.takutakahashi.dev","hosts":[""],"key":{"algo":"rsa","size":2048}}' | cfssl gencert -ca=ca.pem -ca-key=ca-key.pem -config=ca-config.json -profile=server -hostname="$IP,$HOSTNAME,localhost,127.0.0.1" - | cfssljson -bare server
