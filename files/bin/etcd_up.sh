@@ -3,8 +3,8 @@ ls /bin/etcd || /bin/etcd_build.sh
 HOSTNAME=`hostname`
 IP=`dig +short $HOSTNAME`
 ETCD_UNSUPPORTED_ARCH=arm /bin/etcd --name $HOSTNAME  --data-dir /var/lib/etcd/$HOSTNAME \
-  --cert-file=/etc/etcd/certs/server.crt --key-file=/etc/etcd/certs/server.key \
-  --peer-auto-tls \
+  --cert-file=/etc/cfssl/server.pem --key-file=/etc/cfssl/server-key.pem --trusted-ca-file=/etc/cfssl/ca.pem \
+  --peer-cert-file=/etc/cfssl/server.pem --peer-key-file=/etc/cfssl/server-key.pem --peer-trusted-ca-file=/etc/cfssl/ca.pem \
   --discovery-srv lab.takutakahashi.dev \
   --initial-advertise-peer-urls https://$HOSTNAME:2380 \
   --initial-cluster-token etcd-cluster-1 \
