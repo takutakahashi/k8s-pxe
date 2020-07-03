@@ -1,0 +1,13 @@
+{
+    "CN": "My CA",
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C": "JP",
+            "OU": "Kubernetes"
+        }
+    ]
+}
