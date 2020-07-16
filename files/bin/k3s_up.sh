@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 HOSTNAME=`hostname`
 IP=`dig +short $HOSTNAME`
-K3S_OPTS="--datastore-endpoint=`cat /etc/db` --node-taint k3s-controlplane=true:NoExecute --no-deploy traefik --tls-san k8s.lab.takutakahashi.dev --tls-san 127.0.0.1 --tls-san $HOSTNAME --tls-san $IP"
+K3S_OPTS="`cat /etc/db` --node-taint k3s-controlplane=true:NoExecute --no-deploy traefik --tls-san k8s.lab.takutakahashi.dev --tls-san 127.0.0.1 --tls-san $HOSTNAME --tls-san $IP"
 ls /bin/k3s && ls /var/lib/rancher/k3s && k3s server $K3S_OPTS
 apt install -y dnsutils netcat
 rm -f /bin/k3s
